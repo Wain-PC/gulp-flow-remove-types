@@ -1,5 +1,7 @@
 gulp-flow-remove-types
 ==========================
+[![Build Status](https://travis-ci.org/Wain-PC/gulp-flow-remove-types.svg?branch=master)](https://travis-ci.org/Wain-PC/gulp-flow-remove-types)
+[![Coverage Status](https://coveralls.io/repos/github/Wain-PC/gulp-flow-remove-types/badge.svg?branch=master)](https://coveralls.io/github/Wain-PC/gulp-flow-remove-types?branch=master)
 
 Gulp plugin for [flow-remove-types](https://github.com/flowtype/flow-remove-types).
 
