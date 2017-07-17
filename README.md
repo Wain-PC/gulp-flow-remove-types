@@ -26,14 +26,30 @@ gulp.src('file.js')
 
 
 ## Options
+### `pretty`
+Type: `boolean` Default: `false`
+
 By default, [flow-remove-types](https://github.com/flowtype/flow-remove-types) replaces Flow type definitions with whitespaces.
 
 Pass `{pretty: true}` if you want more condensed output (no whitespaces).  
-
+##### Example
 ```javascript
 gulp.src('file.js')
     .pipe(flowRemoveTypes({
         pretty: true
     }))
     .pipe(gulp.dest('dist'));
+```
+
+### `sourceMap`
+Type: `boolean` Default: `false`
+
+If set to `true` gulp will additionally output `your_file_name.js.map` file to the stream.
+##### Example
+```javascript
+gulp.src('file.js')
+    .pipe(flowRemoveTypes({
+        sourceMap: true
+    }))
+    .pipe(gulp.dest('dist')); //This will output both file.js and file.js.map 
 ```
