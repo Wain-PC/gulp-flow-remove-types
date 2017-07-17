@@ -1,6 +1,6 @@
 {
   "name": "gulp-flow-remove-types",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gulp plugin for flow-remove-types",
   "homepage": "http://github.com/wain-pc/gulp-flow-remove-types",
   "repository": {
@@ -13,9 +13,7 @@
   },
   "dependencies": {
     "flow-remove-types": "^1.2.1",
-    "gulp": "^3.9.1",
     "gulp-util": "^3.0.8",
-    "jest": "^20.0.4",
     "through2": "^2.0.3"
   },
   "devDependencies": {

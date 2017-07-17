@@ -1,6 +1,7 @@
 var through = require('through2'),
 	flowRemoveTypes = require('flow-remove-types'),
-	PluginError = require('gulp-util').PluginError;
+	gutil = require('gulp-util'),
+	PluginError = gutil.PluginError;
 
 module.exports = function gulpFlowRemoveTypes(options) {
 	if(!options) {
@@ -15,8 +16,20 @@ module.exports = function gulpFlowRemoveTypes(options) {
 
 		if (file.isBuffer()) {
 			try {
-				file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8'), options).toString());
+				const result = flowRemoveTypes(file.contents.toString('utf8'), options);
+				file.contents = new Buffer(result.toString());
 				this.push(file);
+
+				//sourceMap option support
+				if(options.sourceMap) {
+					this.push(new gutil.File({
+						cwd: file.cwd,
+						base: file.base,
+						path: file.path + '.map',
+						contents: new Buffer(JSON.stringify(result.generateMap()))
+					}))
+				}
+
 				cb();
 			}
 			catch (err) {

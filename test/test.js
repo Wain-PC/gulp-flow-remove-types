@@ -47,4 +47,17 @@ describe('gulp-javascript-obfuscator', function () {
 		});
 	});
 
+	it('should accept `sourceMap` option', (done) => {
+		let count = 0;
+		const stream = gulp.src(['test/fixtures/simple.js']).pipe(gulpFlowRemoveTypes({sourceMap: true}));
+		stream.on('error', done);
+
+		stream.on('data', (file) => ++count);
+
+		stream.on('end', function () {
+			expect(count).toBe(2);
+			done.apply(this, arguments);
+		});
+	});
+
 });
