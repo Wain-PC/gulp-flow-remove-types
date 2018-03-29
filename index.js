@@ -1,7 +1,7 @@
 var through = require('through2'),
 	flowRemoveTypes = require('flow-remove-types'),
-	gutil = require('gulp-util'),
-	PluginError = gutil.PluginError;
+	Vinyl = require('vinyl'),
+	PluginError = require('plugin-error');
 
 module.exports = function gulpFlowRemoveTypes(options) {
 	if(!options) {
@@ -22,7 +22,7 @@ module.exports = function gulpFlowRemoveTypes(options) {
 
 				//sourceMap option support
 				if(options.sourceMap) {
-					this.push(new gutil.File({
+					this.push(new Vinyl({
 						cwd: file.cwd,
 						base: file.base,
 						path: file.path + '.map',
@@ -30,13 +30,16 @@ module.exports = function gulpFlowRemoveTypes(options) {
 					}))
 				}
 
-				cb();
+				return cb();
 			}
 			catch (err) {
-				throw new PluginError('gulp-flow-remove-types', err);
+				return cb(new PluginError('gulp-flow-remove-types', err.message, {
+					lineNumber: err.loc.line,
+					fileName: file.path ? file.relative : null
+				}));
 			}
 		} else if (file.isStream()) {
-			throw new PluginError('gulp-flow-remove-types', 'Streams are not supported!');
+			return cb(new PluginError('gulp-flow-remove-types', 'Streams are not supported!'));
 		}
 	});
 };
