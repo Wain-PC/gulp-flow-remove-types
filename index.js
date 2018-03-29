@@ -30,13 +30,16 @@ module.exports = function gulpFlowRemoveTypes(options) {
 					}))
 				}
 
-				cb();
+				return cb();
 			}
 			catch (err) {
-				throw new PluginError('gulp-flow-remove-types', err);
+				return cb(new PluginError('gulp-flow-remove-types', err.message, {
+					lineNumber: err.loc.line,
+					fileName: file.path ? file.relative : null
+				}));
 			}
 		} else if (file.isStream()) {
-			throw new PluginError('gulp-flow-remove-types', 'Streams are not supported!');
+			return cb(new PluginError('gulp-flow-remove-types', 'Streams are not supported!'));
 		}
 	});
 };

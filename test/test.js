@@ -60,4 +60,15 @@ describe('gulp-javascript-obfuscator', function () {
 		});
 	});
 
+	it('should print error', (done) => {
+		
+		const stream = gulp.src(['test/fixtures/error.js']).pipe(gulpFlowRemoveTypes({sourceMap: true}).on('error',(error) => {
+			expect(error.message).toBe("Unexpected token (3:8)");
+			expect(error.lineNumber).toBe(3);
+			expect(error.fileName).toBe("error.js");
+			done();
+		}));
+		
+	});
+
 });
